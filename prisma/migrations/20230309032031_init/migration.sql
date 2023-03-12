@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Name" ALTER COLUMN "birthYear" SET DATA TYPE TEXT,
+ALTER COLUMN "deathYear" SET DATA TYPE TEXT;

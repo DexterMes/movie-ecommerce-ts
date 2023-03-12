@@ -1,0 +1,116 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model TitleAkas {
+  titleId         String
+  ordering        Int
+  title           String
+  region          String?
+  language        String?
+  types           String[]
+  attributes      String[]
+  isOriginalTitle Boolean
+  movie           Movie    @relation(fields: [titleId], references: [tconst])
+
+  @@id([ordering, titleId])
+}
+
+model Movie {
+  tconst         String       @id
+  titleType      String
+  primaryTitle   String
+  originalTitle  String
+  isAdult        Boolean
+  startYear      Int?
+  endYear        Int?
+  runtimeMinutes Int?
+  genres         String?
+  crew           Crew[]
+  series         Episode[]    @relation("episodeSeries")
+  episodeOf      Episode?     @relation("episodeOf")
+  principals     Principals[]
+  ratings        Rating?
+  akas           TitleAkas[]
+  order          Order[]
+}
+
+model Crew {
+  tconst    String   @id
+  directors String[]
+  writers   String[]
+  movie     Movie    @relation(fields: [tconst], references: [tconst])
+}
+
+model Episode {
+  tconst        String @id
+  parentTconst  String
+  seasonNumber  Int?
+  episodeNumber Int?
+  series        Movie  @relation("episodeSeries", fields: [parentTconst], references: [tconst])
+  episodeOf     Movie  @relation("episodeOf", fields: [tconst], references: [tconst])
+}
+
+model Principals {
+  tconst     String
+  ordering   String
+  nconst     String
+  category   String
+  job        String?
+  characters String[]
+  name       Name     @relation(fields: [nconst], references: [nconst])
+  movie      Movie    @relation(fields: [tconst], references: [tconst])
+
+  @@id([tconst, nconst])
+}
+
+model Name {
+  nconst            String       @id
+  primaryName       String
+  birthYear         String?
+  deathYear         String?
+  primaryProfession String[]
+  knownForTitles    String[]
+  principals        Principals[]
+}
+
+model Rating {
+  tconst        String @id
+  averageRating Float
+  numVotes      Int
+  movie         Movie  @relation(fields: [tconst], references: [tconst])
+}
+
+model User {
+  username String   @id
+  password String
+  role     Role
+  cart     String[]
+  order    Order[]
+}
+
+model Order {
+  id       Int    @id @default(autoincrement())
+  username String
+  tconst   String[]
+  status   Status @default(INITIATED)
+  movie    Movie  @relation(fields: [tconst], references: [tconst])
+  user     User   @relation(fields: [username], references: [username])
+}
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum Status {
+  INITIATED
+  PROCESS
+  SHIPPED
+  COLLECTED
+}
