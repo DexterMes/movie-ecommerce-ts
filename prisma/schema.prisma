@@ -37,7 +37,6 @@ model Movie {
   principals     Principals[]
   ratings        Rating?
   akas           TitleAkas[]
-  order          Order[]
 }
 
 model Crew {
@@ -97,9 +96,8 @@ model User {
 model Order {
   id       Int    @id @default(autoincrement())
   username String
-  tconst   String[]
+  movies   String[]
   status   Status @default(INITIATED)
-  movie    Movie  @relation(fields: [tconst], references: [tconst])
   user     User   @relation(fields: [username], references: [username])
 }
 
