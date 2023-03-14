@@ -5,23 +5,14 @@ const prisma = new PrismaClient();
 
 export const placeOrder: RequestHandler = async (req, res) => {
 	try {
-		// Extract values from request
-		const { tconst, quantity } = req.body;
-
 		// Extract user data
-		const { username } = req.user;
-
-		// First check if that movie exists or not
-		const movie = await prisma.movie.findUnique({ where: { tconst } });
-		// If not then send an error message
-		if (!movie) return res.json({ error: "The movie id is incorrect" });
+		const { username, cart } = req.user;
 
 		// Create an instance of order
 		const order = await prisma.order.create({
 			data: {
 				username,
-				tconst,
-				quantity,
+				movies: cart,
 			},
 		});
 
