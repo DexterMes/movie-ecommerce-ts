@@ -8,6 +8,8 @@ export const placeOrder: RequestHandler = async (req, res) => {
 		// Extract user data
 		const { username, cart } = req.user;
 
+		if (!cart.length) return res.json({ error: "You don't have anything in your cart" });
+
 		// Create an instance of order
 		const order = await prisma.order.create({
 			data: {
@@ -15,6 +17,9 @@ export const placeOrder: RequestHandler = async (req, res) => {
 				movies: cart,
 			},
 		});
+
+		// Remove all items from the user's cart
+		await prisma.user.update({ where: { username }, data: { cart: [] } });
 
 		// Send a success message
 		return res.json({
