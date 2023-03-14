@@ -4,7 +4,8 @@ import * as http from "http";
 import AdminJS from "adminjs";
 
 import { handleLogin, registerUser } from "./src/user.controller";
-import { getAllMovies, getMoviesByGenre, getMoviesByName, getMoviesByPeople, getMoviesByYear } from "./src/movie.controller";
+// import { getAllMovies, getFilteredMovies, getMoviesByGenre, getMoviesByName, getMoviesByPeople, getMoviesByYear } from "./src/movie.controller";
+import { getAllMovies, getFilteredMovies } from "./src/movie.controller";
 import { isAuthenticated } from "./src/middleware/auth.middleware";
 import { addToCart, getOrders, placeOrder, removeFromCart } from "./src/order.controller";
 import adminJsRouter from "./src/admin";
@@ -37,10 +38,11 @@ app.get("/user/login", handleLogin);
 app.use(isAuthenticated);
 
 app.get("/movie", getAllMovies);
-app.get("/movie/year/:year", getMoviesByYear);
-app.get("/movie/name/:name", getMoviesByName);
-app.get("/movie/actors/:name", getMoviesByPeople);
-app.get("/movie/genre/:genre", getMoviesByGenre);
+// app.get("/movie/year/:year", getMoviesByYear);
+// app.get("/movie/name/:name", getMoviesByName);
+// app.get("/movie/actors/:name", getMoviesByPeople);
+// app.get("/movie/genre/:genre", getMoviesByGenre);
+app.get("/movie/filter", getFilteredMovies);
 
 app.post("/movie/order", placeOrder);
 app.get("/movie/order", getOrders);
