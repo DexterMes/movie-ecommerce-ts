@@ -9,7 +9,7 @@ Browse and order movies online
 
 ### Add a ```.env``` file the following
 ```
-DATABASE_URL="postgresql://postgres:your-password@localhost:5432/imdb"
+DATABASE_URL="postgresql://your-username:your-password@localhost:5432/imdb"
 JWT_SECRET= "asdawasdbcvnn,kl;fhmnb,k;iol[iop-967ueherh4twcfse4y51y854906568-9894;65';we;f\34p]6[;rh][;hbs-d67"
 SERVER_PORT=7000
 CLIENT_PORT=5000
