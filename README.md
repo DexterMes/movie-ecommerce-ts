@@ -25,9 +25,9 @@ CLIENT_PORT=5000
 ### Seed Data
 -> Download and extract datasets from https://datasets.imdbws.com/
 
--> Use the ```populate.ts``` to populate title.crew, name.basic and title.principal
+-> Use the ```populate.ts``` to populate title.crew, name.basic and title.principal (after turning them into json files)
 
--> Use and update ```\COPY "Movie" FROM 'path_to_movie/movies.tsv' DELIMITER E'\t' NULL '\N' ENCODING 'utf8' HEADER;``` to seed the rest
+-> Use and update ```\COPY "Movie" FROM 'path_to_movie/movies.tsv' DELIMITER E'\t' NULL '\N' ENCODING 'utf8' HEADER;``` to seed the rest (no need to turn them into json files)
 
 ### Run Server
 -> Use ```npm run dev``` to start server
